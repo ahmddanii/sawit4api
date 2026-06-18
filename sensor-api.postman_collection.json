@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "8f8c2e6f-40e1-4c12-a1f7-bc6018306df1",
+		"name": "pH & TDS Water Monitor API",
+		"description": "Koleksi request Postman untuk menguji endpoint REST API sistem monitoring sensor pH dan TDS kualitas air tambang.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Server Status (Root)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Mengecek apakah server API aktif."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Sensor Data (Simulate ESP32)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ph\": 7.25,\n  \"tds\": 420,\n  \"device_id\": \"transmitter-01\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data"
+					]
+				},
+				"description": "Mensimulasikan pengiriman data sensor pH dan TDS dari ESP32 Gateway ke REST API backend."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Sensor Data (Trigger Danger State)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ph\": 3.20,\n  \"tds\": 1200,\n  \"device_id\": \"transmitter-01\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data"
+					]
+				},
+				"description": "Mengirim data pH sangat asam dan TDS sangat tinggi untuk memicu alert BAHAYA/Kritis di sistem."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Historical Data (With Filters)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data?page=1&limit=20&from=2026-06-11&to=2026-06-17",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Halaman data"
+						},
+						{
+							"key": "limit",
+							"value": "20",
+							"description": "Batas data per halaman"
+						},
+						{
+							"key": "from",
+							"value": "2026-06-11",
+							"description": "Format tanggal YYYY-MM-DD"
+						},
+						{
+							"key": "to",
+							"value": "2026-06-17",
+							"description": "Format tanggal YYYY-MM-DD"
+						}
+					]
+				},
+				"description": "Mengambil semua data historis sensor lengkap dengan pagination dan saringan tanggal."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Latest Sensor Reading",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data/latest",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data",
+						"latest"
+					]
+				},
+				"description": "Mengambil 1 data sensor terakhir yang tersimpan di MongoDB."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Aggregated Stats (Today)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data/stats?period=today",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data",
+						"stats"
+					],
+					"query": [
+						{
+							"key": "period",
+							"value": "today",
+							"description": "today | week | month"
+						}
+					]
+				},
+				"description": "Mendapatkan statistik ringkasan (rata-rata, minimal, maksimal) sensor."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dummy Dynamic Reading",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/sensor-data/dummy",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sensor-data",
+						"dummy"
+					]
+				},
+				"description": "Mengambil data dummy simulasi dinamis dari backend tanpa menyimpannya ke database."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "sensor-api",
+  "version": "1.0.0",
+  "description": "REST API untuk sistem monitoring sensor pH dan TDS air (MERN Stack)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "simulate": "node simulator.js",
+    "test": "jest --runInBand --detectOpenHandles --forceExit"
+  },
+  "keywords": [
+    "sensor",
+    "ph",
+    "tds",
+    "monitoring",
+    "iot",
+    "esp32",
+    "lora"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.2.2"
+  }
+}
