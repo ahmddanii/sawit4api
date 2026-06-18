@@ -1,3 +1,13 @@
+---
+title: sawit4api
+emoji: 💧
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # pH & TDS Water Monitor - REST API Documentation
 
 Sistem backend REST API berbasis Node.js, Express.js, MongoDB Atlas, dan Socket.io untuk monitoring kualitas air secara real-time. API ini menerima data dari ESP32 Gateway (via LoRa) dan menyajikannya ke dashboard React.
