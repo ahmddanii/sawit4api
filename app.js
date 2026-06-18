@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const sensorRoutes = require('./src/routes/sensor');
 const configRoutes = require('./src/routes/config');
+const aiRoutes = require('./src/routes/ai');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/sensor-data', sensorRoutes);
 app.use('/api', configRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
